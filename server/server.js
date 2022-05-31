@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 const connectDB = require('./config/db');
+
 dotenv.config;
 
 connectDB();
@@ -14,9 +15,25 @@ app.use(cors());
 
 app.use('/api/items', itemRoutes)
 
-app.get('/', (req,res)=> {
-    res.send('API is running')
-});
+// ------deployment------>>
+
+__dirname = path.resolve();
+if (process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(__dirname, "client", "build")));
+    app.get("*", (req, res) =>
+        res.sendFile(path.join(
+            __dirname, "client", "build", "index.html"
+        ))
+    );
+    logger.info('the app running on production');
+} else {
+    app.get('/', (req,res)=> {
+        res.send('API is running')
+    });
+    logger.info('the app running on development');
+}
+
+// <<------deployment------
 
 const PORT = process.env.PORT || 8080;
 

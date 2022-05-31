@@ -14,7 +14,7 @@ function ItemList (props){
 
     useEffect(() => {
         dispatch(sortItemAction(props.status));
-    }, [dispatch])
+    }, [dispatch, props.status])
 
     const deleteHandler = (id) => {
         if (window.confirm("Delete this item ?")) {

@@ -36,10 +36,6 @@ const createItem = asyncHandler(
             res.status(400);
             throw new Error('Error cannot create an item')
         }
-
-        res.json({
-            name,
-        });
     });
 
 const getItemsByStatus = asyncHandler(async (req, res) => {
